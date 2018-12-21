@@ -215,6 +215,13 @@ module.exports = {
         // match the requirements. When no loader matches it will fall
         // back to the "file" loader at the end of the loader list.
         oneOf: [
+          {
+            test: [/\.html$/],
+            loader: require.resolve('html-loader'),
+            options: {
+              attrs: ['img:src', 'link:href', ':data-src'],
+            },
+          },
           // "url" loader works like "file" loader except that it embeds assets
           // smaller than specified limit in bytes as data URLs to avoid requests.
           // A missing `test` is equivalent to a match.
