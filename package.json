@@ -1,6 +1,7 @@
 {
   "name": "ethcrawfords-create-app",
-  "version": "0.1.0",
+  "description": "Webpack configuration based on create-react-app",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@babel/core": "7.1.0",
