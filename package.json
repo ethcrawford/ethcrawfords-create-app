@@ -54,9 +54,9 @@
   },
   "homepage": "./",
   "scripts": {
-    "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
-    "test": "node scripts/test.js"
+    "start": "node node_scripts/start.js",
+    "build": "node node_scripts/build.js",
+    "test": "node node_scripts/test.js"
   },
   "eslintConfig": {
     "extends": "react-app"
