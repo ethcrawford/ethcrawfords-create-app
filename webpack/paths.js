@@ -71,7 +71,7 @@ module.exports = {
   appPath: resolveApp('.'),
   appBuild: resolveApp('dist'),
   appPublic: resolveApp('just_copy'),
-  appHtml: resolveApp('src/views'),
+  appHtml: resolveApp('src/index.html'),
   appIndexJs: resolveModule(resolveApp, 'src/index'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),

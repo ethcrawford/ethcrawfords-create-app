@@ -73,22 +73,6 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
   return loaders;
 };
 
-// Generates HTML views with the <script> injected.
-function generateHtmlPlugins(templateDir) {
-  const templateFiles = fs.readdirSync(templateDir);
-  return templateFiles.map(item => {
-    const parts = item.split(".");
-    const name = parts[0];
-    const extension = parts[1];
-    return new HtmlWebpackPlugin({
-      filename: `${name}.html`,
-      template: `${templateDir}/${name}.${extension}`,
-      inject: true,
-    });
-  });
-};
-
-const htmlPlugins = generateHtmlPlugins(paths.appHtml);
 
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
@@ -360,6 +344,11 @@ module.exports = {
     ],
   },
   plugins: [
+    // Generates an `index.html` file with the <script> injected.
+    new HtmlWebpackPlugin({
+      inject: true,
+      template: paths.appHtml,
+    }),
     // Makes some environment variables available in index.html.
     // The public URL is available as %PUBLIC_URL% in index.html, e.g.:
     // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
@@ -424,7 +413,7 @@ module.exports = {
         silent: true,
         formatter: typescriptFormatter,
       }),
-  ].concat(htmlPlugins).filter(Boolean),
+  ].filter(Boolean),
 
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.

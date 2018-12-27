@@ -102,37 +102,6 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
   return loaders;
 };
 
-// Generates HTML views with the <script> injected.
-function generateHtmlPlugins(templateDir) {
-  const templateFiles = fs.readdirSync(templateDir);
-  return templateFiles.map(item => {
-    const parts = item.split(".");
-    const name = parts[0];
-    const extension = parts[1];
-    return new HtmlWebpackPlugin({
-      filename: `${name}.html`,
-      template: `${templateDir}/${name}.${extension}`,
-      inject: true,
-      minify: {
-        removeComments: true,
-        collapseWhitespace: false,
-        removeRedundantAttributes: true,
-        caseSensitive: true,
-        useShortDoctype: true,
-        removeEmptyAttributes: true,
-        removeStyleLinkTypeAttributes: true,
-        keepClosingSlash: false,
-        sortAttributes: true,
-        sortClassName: true,
-        minifyJS: true,
-        minifyCSS: true,
-        minifyURLs: true,
-      },
-    });
-  });
-};
-
-const htmlPlugins = generateHtmlPlugins(paths.appHtml);
 
 // This is the production configuration.
 // It compiles slowly and is focused on producing a fast and minimal bundle.
@@ -463,6 +432,26 @@ module.exports = {
     ],
   },
   plugins: [
+    // Generates an `index.html` file with the <script> injected.
+    new HtmlWebpackPlugin({
+      inject: true,
+      template: paths.appHtml,
+      minify: {
+        removeComments: true,
+        collapseWhitespace: false,
+        removeRedundantAttributes: true,
+        caseSensitive: true,
+        useShortDoctype: true,
+        removeEmptyAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        keepClosingSlash: false,
+        sortAttributes: true,
+        sortClassName: true,
+        minifyJS: true,
+        minifyCSS: true,
+        minifyURLs: true,
+      },
+    }),
     // Inlines the webpack runtime script. This script is too small to warrant
     // a network request.
     shouldInlineRuntimeChunk &&
@@ -529,7 +518,7 @@ module.exports = {
         silent: true,
         formatter: typescriptFormatter,
       }),
-  ].concat(htmlPlugins).filter(Boolean),
+  ].filter(Boolean),
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
   node: {
